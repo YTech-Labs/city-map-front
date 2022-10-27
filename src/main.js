@@ -4,6 +4,10 @@ import App from './App.vue';
 import router from './router/main';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://constructions-map-server.havaian.repl.co';
+const app = createApp(App);
 
-createApp(App).use(router).mount('#app');
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_ENPOINT;
+
+app.use(router);
+
+app.mount('#app');
