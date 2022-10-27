@@ -11,31 +11,20 @@
 </template>
 
 <script setup>
+
 import GoogleLogo from '/assets/search.png';
 import { getGoogleUrl } from '../utils/getGoogleUrl';
 
 const from = '/';
 
-  // export default {
-  //   name: "Profile",
-  //   data() {
-  //     return {
-  //       google_url: getGoogleUrl(from),
-  //       google_logo: '/assets/search.png'
-  //     }
-  //   },
-  //   mounted() {
+for (let x = 0; x < document.querySelector('.active.exact-active').attributes.length; x++) {
+  if (document.querySelector('.active.exact-active').attributes[x].name == 'modelvalue') {
+    document.querySelector('#page-title').innerHTML = '';
+    document.querySelector('#page-title').append(document.querySelector('.active.exact-active').attributes[x].nodeValue);
+  }
+}
 
-      // Function for dynamically changing the label of the current page
-      for (let x = 0; x < document.querySelector('.active.exact-active').attributes.length; x++) {
-        if (document.querySelector('.active.exact-active').attributes[x].name == 'modelvalue') {
-          document.querySelector('#page-title').innerHTML = '';
-          document.querySelector('#page-title').append(document.querySelector('.active.exact-active').attributes[x].nodeValue);
-        }
-      }
-//     },
-//   }
-// </script>
+</script>
 
 <style scoped>
   a {
