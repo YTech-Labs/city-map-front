@@ -6,9 +6,9 @@
                   <img class='nav-icon' :src="item.icon" :alt="item.alt">
               </router-link>
             </div>
-            <!-- <div class="page-title-container">
+            <div class="page-title-container">
               <p id="page-title"></p> 
-            </div> -->
+            </div>
         </div>
         <router-view></router-view>
     </div>
@@ -27,15 +27,15 @@
             alt: 'Map Icon',
             link: '/',
           },
-          // {
-          //   key:'profile',
-          //   title: 'Profile',
-          //   icon: './assets/user.svg',
-          //   alt: 'Profile Icon',
-          //   link: 'profile',
-          // },
+          {
+            key:'profile',
+            title: 'Profile',
+            icon: './assets/user.svg',
+            alt: 'Profile Icon',
+            link: 'profile',
+          },
         ],
-        // pageTitle: 'Map'
+        pageTitle: 'Map'
       };
     },
     mounted() {}
