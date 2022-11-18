@@ -11,7 +11,6 @@
         name: "Map",
         
         mounted() {
-            console.log(document.cookie);
             // Initializing map
             const map = L.map('map', {
                 drawControl: false,
@@ -153,151 +152,216 @@
             }
 
             // Function for loading popups
-            const loadPopupPolygon = (events, layer) => {
-            
-                if (events === 'created') {
-                    popupContent = `
-                    <div id="popup-content">
-                        <table id="created-table">
-                            <tr>
-                                <td><label for="name" class="label-name"></label><span class="content-name">Name</span></td>
-                                <td><input name="name" type="text" required></td>
-                            </tr>
-                            <tr>
-                                <td><label for="area" class="label-name"></label><span class="content-name">Area (ha)</span></td>
-                                <td><input name="area" type="number" value="${area.toFixed(2)}" required disabled></td>
-                            </tr>
-                            <tr>
-                                <td><label for="description"></label><span class="content-name">Description</span></td>
-                                <td><input name="description" type="text" required></td>
-                            </tr>
-                        </table>
-                        <div id="save-layer">
-                            <button id="save-button">save</button>
-                            <button id="cancel-button">cancel</button>
-                        </div>
-                    </div>
-                    `;
+            const loadPopupPolygon = (layer_type, events, layer) => {
 
-                    layer.bindPopup(popupContent).openPopup();
-
-                    $('#cancel-button').click(() => {
-                        drawnItems.clearLayers();
-                    });
-
-                    $('#save-button').click(() => {
-                        data = polygon;
-                        data.properties = {
-                            'name': $('input[name="name"]').val(),
-                            'area': $('input[name="area"]').val(),
-                            'description': $('input[name="description"]').val()
-                        }
-                        if (data.properties['name'] != null && 
-                            data.properties['name'].length != 0 && 
-                            data.properties['area'] != null && 
-                            data.properties['area'].length != 0 && 
-                            data.properties['description'] != null &&
-                            data.properties['description'].length != 0) {
-                                // console.log(data);
-                                createBuilding(data);
-                                layer.closePopup();
-                        } else {
-                            fireAlert('Please, fill in all the fields!', 'error');
-                        }
-                        
-                    });
-
-                } else if (events === 'generated') {
-                    data = layer.feature.properties;
-                    return popupContent = `
+                if (layer_type === 'polygon') {
+                    if (events === 'created') {
+                        popupContent = `
                         <div id="popup-content">
-                            <table id="generated-table">
+                            <table id="created-table">
                                 <tr>
-                                    <td>Name</td>
-                                    <td>${data.name}</td>
+                                    <td><label for="name" class="label-name"></label><span class="content-name">Name</span></td>
+                                    <td><input name="name" type="text" required></td>
                                 </tr>
                                 <tr>
-                                    <td>Area</td>
-                                    <td>${data.area}</td>
+                                    <td><label for="area" class="label-name"></label><span class="content-name">Area (ha)</span></td>
+                                    <td><input name="area" type="number" value="${area.toFixed(2)}" required disabled></td>
                                 </tr>
                                 <tr>
-                                    <td>Description</td>
-                                    <td>${data.description}</td>
+                                    <td><label for="description"></label><span class="content-name">Description</span></td>
+                                    <td><input name="description" type="text" required></td>
                                 </tr>
                             </table>
+                            <div id="save-layer">
+                                <button id="save-button">save</button>
+                                <button id="cancel-button">cancel</button>
+                            </div>
                         </div>
-                    `;
-                } else if (events === 'edited') {
+                        `;
 
-                    data = layer.feature;
-                    var id = data.id;
+                        layer.bindPopup(popupContent).openPopup();
 
-                    layer.unbindPopup();
+                        $('#cancel-button').click(() => {
+                            drawnItems.clearLayers();
+                        });
 
-                    popupContent = `
-                    <div id="popup-content">
-                        <table id="created-table">
-                            <tr>
-                                <td><label for="name" class="label-name"></label><span class="content-name">Name</span></td>
-                                <td><input name="name" type="text" value="${data.properties.name}" required></td>
-                            </tr>
-                            <tr>
-                                <td><label for="area" class="label-name"></label><span class="content-name">Area (ha)</span></td>
-                                <td><input name="area" type="number" value="${data.properties.area.toFixed(2)}" required disabled></td>
-                            </tr>
-                            <tr>
-                                <td><label for="description"></label><span class="content-name">Description</span></td>
-                                <td><input name="description" type="text" value="${data.properties.description}" required></td>
-                            </tr>
-                        </table>
-                        <div id="save-layer">
-                            <button id="save-button">save</button>
-                            <button id="cancel-button">cancel</button>
+                        $('#save-button').click(() => {
+                            data = polygon;
+                            data.properties = {
+                                'name': $('input[name="name"]').val(),
+                                'area': $('input[name="area"]').val(),
+                                'description': $('input[name="description"]').val()
+                            }
+                            if (data.properties['name'] != null && 
+                                data.properties['name'].length != 0 && 
+                                data.properties['area'] != null && 
+                                data.properties['area'].length != 0 && 
+                                data.properties['description'] != null &&
+                                data.properties['description'].length != 0) {
+                                    createBuilding(data);
+                                    layer.closePopup();
+                            } else {
+                                fireAlert('Please, fill in all the fields!', 'error');
+                            }
+                            
+                        });
+
+                    } else if (events === 'generated') {
+                        data = layer.feature.properties;
+                        return popupContent = `
+                            <div id="popup-content">
+                                <table id="generated-table">
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>${data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Area</td>
+                                        <td>${data.area}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>${data.description}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        `;
+                    } else if (events === 'edited') {
+
+                        data = layer.feature;
+                        var id = data.id;
+
+                        layer.unbindPopup();
+
+                        popupContent = `
+                        <div id="popup-content">
+                            <table id="created-table">
+                                <tr>
+                                    <td><label for="name" class="label-name"></label><span class="content-name">Name</span></td>
+                                    <td><input name="name" type="text" value="${data.properties.name}" required></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="area" class="label-name"></label><span class="content-name">Area (ha)</span></td>
+                                    <td><input name="area" type="number" value="${data.properties.area.toFixed(2)}" required disabled></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="description"></label><span class="content-name">Description</span></td>
+                                    <td><input name="description" type="text" value="${data.properties.description}" required></td>
+                                </tr>
+                            </table>
+                            <div id="save-layer">
+                                <button id="save-button">save</button>
+                                <button id="cancel-button">cancel</button>
+                            </div>
                         </div>
-                    </div>
-                    `;
-                    layer.bindPopup(popupContent).openPopup();
+                        `;
+                        layer.bindPopup(popupContent).openPopup();
 
-                    $('.leaflet-popup-close-button').click((e) => {
-                        layer.closePopup();
-                    })
+                        $('.leaflet-popup-close-button').click((e) => {
+                            layer.closePopup();
+                        })
 
-                    $('#cancel-button').click((e) => {
-                        editItems.clearLayers();
-                        var options = {
-                            can_draw: true, 
-                            can_edit: true, 
-                            can_delete: true,
-                            polygons: true,
-                            markers: false,
-                            operatingLayer: drawnItems,
-                        }
-                        reloadDrawControl('secondary', options);
-                        getAllBuildings();
-                    });
+                        $('#cancel-button').click((e) => {
+                            editItems.clearLayers();
+                            var options = {
+                                can_draw: true, 
+                                can_edit: true, 
+                                can_delete: true,
+                                polygons: true,
+                                markers: false,
+                                operatingLayer: drawnItems,
+                            }
+                            reloadDrawControl('secondary', options);
+                            getAllBuildings();
+                        });
 
-                    $('#save-button').click(() => {
-                        data = polygon;
-                        data.properties = {
-                            'name': $('input[name="name"]').val(),
-                            'area': $('input[name="area"]').val(),
-                            'description': $('input[name="description"]').val(),
-                        }
-                        if (data.properties['name'] != null && 
-                            data.properties['name'].length != 0 && 
-                            data.properties['area'] != null && 
-                            data.properties['area'].length != 0 && 
-                            data.properties['description'] != null &&
-                            data.properties['description'].length != 0) {
-                                console.log(polygon);
-                                updateBuilding(data, id);
-                                layer.closePopup();
-                        } else {
-                            fireAlert('Please, fill in all the fields!', 'error');
-                        }
-                    });
+                        $('#save-button').click(() => {
+                            data = polygon;
+                            data.properties = {
+                                'name': $('input[name="name"]').val(),
+                                'area': $('input[name="area"]').val(),
+                                'description': $('input[name="description"]').val(),
+                            }
+                            if (data.properties['name'] != null && 
+                                data.properties['name'].length != 0 && 
+                                data.properties['area'] != null && 
+                                data.properties['area'].length != 0 && 
+                                data.properties['description'] != null &&
+                                data.properties['description'].length != 0) {
+                                    console.log(polygon);
+                                    updateBuilding(data, id);
+                                    layer.closePopup();
+                            } else {
+                                fireAlert('Please, fill in all the fields!', 'error');
+                            }
+                        });
+                    }
+                } else if (layer_type === 'marker') {
+                    if (events === 'created') {
+                        popupContent = `
+                            <div id="popup-content">
+                                <table id="generated-table">
+                                    <tr><td>Добавление объекта</td></tr>
+                                    <tr><td>Локация</td><td><input name='location' type='text' required></td></tr>
+                                    <tr><td>Изображения</td><td><input name='link' type='url' required></td></tr>
+                                    <tr><td>Описание</td><td><input name='description' type='text' required></td></tr>
+                                    <tr><td>Время появления</td><td><input name='start_time' type='date' required></td></tr>
+                                </table>
+                                <div id="save-layer">
+                                    <button id="save-button">save</button>
+                                    <button id="cancel-button">cancel</button>
+                                </div>
+                            </div>
+                        `
+
+                        const point = turf.point([Object.values(layer._latlng)[1], Object.values(layer._latlng)[0]]);
+                        layer.bindPopup(popupContent).openPopup();
+                        $('#cancel-button').click(() => {
+                            drawnItems.clearLayers();
+                        });
+                        $('#save-button').click(() => {
+                            const data = point;
+                            point.properties = {
+                                'location': $('input[name="location"]').val(),
+                                'link': $('input[name="link"]').val(),
+                                'description': $('input[name="description"]').val(),
+                                'start_time': $('input[name="start_time"]').val(),
+                                'relevance': '+',
+                            }
+                            createMarker(data);
+                            layer.closePopup();
+                        })
+
+                    } else if ('generated') {
+                        data = layer.feature.properties;
+                        return popupContent = `
+                            <div id="popup-content">
+                                <table id="generated-table">
+                                    <tr>
+                                        <td>Локация</td>
+                                        <td>${data.location}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Изображения</td>
+                                        <td><a href="${data.link}">Link</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Описание</td>
+                                        <td>${data.description}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Время появления</td>
+                                        <td>${data.start_time}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Актуальность</td>
+                                        <td>${data.relevance}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        `;
+                    }
                 }
-
             }
 
             // Function for firing alerts
@@ -310,9 +374,8 @@
                 })
             }
 
-            // Getting all buildnigs from DB and diplaying them on map
+            // Getting all buildings from DB and diplaying them on map
             const getAllBuildings = () => {
-            
                 axios.get('/get-all-buildings')
                 .then(function (response) {
                     var states = {
@@ -373,7 +436,38 @@
                                 });
                         }
                     }).bindPopup(function (layer) {
-                        return popupContent = loadPopupPolygon('generated', layer);
+                        return popupContent = loadPopupPolygon('polygon', 'generated', layer);
+                    }).addTo(map);
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+            };
+
+            // Getting all buildnigs from DB and diplaying them on map
+            const getAllMarkers = () => {
+                axios.get('/get-all-markers')
+                .then(function (response) {
+                    var states = {
+                        features: [],
+                        type: "FeatureCollection"
+                    }
+                    allLayers = response.data;
+                    for (var i in Object.keys(allLayers)) {
+                        layer = allLayers[i];
+                        var state = {
+                            "type": "Feature",
+                            "properties": layer.properties,
+                            "geometry": layer.geometry
+                        }
+                        state.id = layer._id;
+                        states.features.push(state);
+                    }
+                    Layer = L.geoJSON(states, {
+                        onEachFeature: function (feature, layer) {}
+                    }).bindPopup(function (layer) {
+                        return popupContent = loadPopupPolygon('marker', 'generated', layer);
                     }).addTo(map);
                 })
                 .catch(function (error) {
@@ -398,34 +492,44 @@
                 reloadDrawControl('initial', options);
             }
 
-            getAllBuildings();
+            // getAllBuildings();
+            getAllMarkers();
 
             // Wrapper function for axios method of creating buildings
             const createBuilding = (data) => {
                 axios.post('/add-building', data)
-                .then(function (response) {
+                .then((response) => {
                     // handle success
                     fireAlert('Building created successfully!', 'success');
                     drawnItems.clearLayers();
                     getAllBuildings();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     // handle error
                     console.log(error);
                     fireAlert('Some thing went wrong while creating the buliding!', 'error');
                 });
             }
 
+            const createMarker = (data) => {
+                axios.post('/add-marker', data)
+                .then((response) => {
+                    fireAlert('Marker created successfully!', 'success');
+                    drawnItems.clearLayers();
+                    getAllMarkers();
+                })
+            }
+
             // Wrapper function for axios method of updating buildings
             const updateBuilding = (data, id) => {
                 axios.post('/update-building/' + id, data)
-                .then(function (response) {
+                .then((response) => {
                     // handle success
                     fireAlert('Building updated successfully!', 'success');
                     drawnItems.clearLayers();
                     getAllBuildings();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     // handle error
                     console.log(error);
                     fireAlert('Some thing went wrong while updating the building!', 'error');
@@ -434,13 +538,13 @@
 
             const deleteBuilding = (id) => {
                 axios.post('/delete-building/' + id)
-                .then(function (response) {
+                .then((response) => {
                     // handle success
                     fireAlert('Building deleted successfully!', 'success');
                     drawnItems.clearLayers();
                     getAllBuildings();
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     // handle error
                     console.log(error);
                     fireAlert('Some thing went wrong while deleting the building!', 'error');
@@ -449,22 +553,38 @@
 
             // Map event for creating layers
             map.on("draw:created", (e) => {
+                console.log(e);
+                if (e.layerType === 'marker') {
+                    layer = e.layer;
+                    drawnItems.addLayer(layer);
+                    loadPopupPolygon('marker', 'created', layer);
 
-                var options = {
-                    can_draw: false, 
-                    can_edit: true, 
-                    can_delete: true,
-                    polygons: true,
-                    markers: false,
-                    operatingLayer: drawnItems,
+                    var options = {
+                        can_draw: false, 
+                        can_edit: false, 
+                        can_delete: false,
+                        polygons: false,
+                        markers: false,
+                        operatingLayer: drawnItems,
+                    }
+                    reloadDrawControl('secondary', options);
+                } else {
+                    layer = e.layer;
+                    drawnItems.addLayer(layer);
+
+                    findAreaPolygon(layer, 'created');
+                    loadPopupPolygon('polygon', 'created', layer);
+
+                    var options = {
+                        can_draw: false, 
+                        can_edit: true, 
+                        can_delete: true,
+                        polygons: true,
+                        markers: false,
+                        operatingLayer: drawnItems,
+                    }
+                    reloadDrawControl('secondary', options);
                 }
-                reloadDrawControl('secondary', options);
-
-                layer = e.layer;
-                drawnItems.addLayer(layer);
-
-                findAreaPolygon(layer, 'created');
-                loadPopupPolygon('created', layer);
             
             });
             
@@ -474,7 +594,7 @@
                 e.layers._layers = Object.values(editItems._layers);
                 layer = Object.values(editItems._layers)[0];
                 findAreaPolygon(layer, 'edited');
-                loadPopupPolygon('edited', layer);
+                loadPopupPolygon('polygon', 'edited', layer);
             
             });
             
