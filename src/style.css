@@ -23,42 +23,14 @@ body {
 #content-wrapper {
   height: 100%;
   width: 100%;
-  display: inline-grid;
-  grid-template-columns: 5% 95%;
-}
-
-/* WRAPPER DIV FOR SIDEMENU */
-.menu {
-  position: relative;
-  background-color: rgb(255, 255, 255);
-  height: 100%;
-  width: 100%;
-  border-right: 1px solid black;
-}
-
-.menu-wrapper {
   display: grid;
-  height: 30%;
-  width: 100%;
+  grid-template-rows: 5% 95%;
+}
+
+.site-content {
   position: relative;
-}
-
-.menu-wrapper a {
-  display: grid;
-  color: #fff;
-  text-decoration: none;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  height: 100vh;
   width: 100%;
-  
-  background-color: rgb(255, 255, 255);
-  transition: all 0.2s ease;
-}
-
-.menu a:hover {
-  background-color: rgb(226, 226, 226);
-  transition: all 0.2s ease;
 }
 
 /* WRAPPER DIV FOR EVERY PAGE */
@@ -66,33 +38,13 @@ body {
   padding: 3% 5% 5% 5%;
 }
 
-.nav-icon {
-  height: 30px;
-}
-
-.router-link-exact-active {
-  background-color: rgb(226, 226, 226);
+#map {
+  width: 100%;
+  height: 100%;
 }
 
 .leaflet-control-attribution a {
   display: none; 
-}
-
-.page-title-container {
-  position: absolute;
-  max-width: 100%;
-  bottom: 5%;
-}
-
-#page-title {
-  font-size: 26px;
-  text-transform: uppercase;
-  font-family: 'Montserrat' ,sans-serif;
-
-  text-align: center;
-  align-self: center;
-  justify-self: center;
-  transform: rotate(-90deg);
 }
 
 #created-table,
@@ -118,4 +70,133 @@ body {
 #popup-content textarea {
   min-height: 110px;
   resize: none;
+}
+
+#login-signup-links {
+  display: inline-flex;
+  min-width: 125px;
+  justify-content: space-between;
+}
+
+.login-signup-link {
+  margin-bottom: 1%;
+  margin-right: 3%;
+  width: 75px;
+  height: 25px;
+  /* border: 1px solid black; */
+  text-decoration: none;
+  
+  color: black;
+  border-radius: 2px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.login-signup-link:hover {
+  background-color: rgb(226, 226, 226);
+  transition: all 0.2s ease;
+}
+
+#auth-form {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: repeat(1fr);
+}
+
+.auth-wrapper {
+  position: relative;
+  margin-bottom: 10%;
+  text-indent: 4px;
+}
+
+.auth-wrapper-select {
+  position: relative;
+  margin-bottom: 10%;
+}
+
+.auth-wrapper-select select {
+  width: 100%;
+  height: 100%;
+  justify-self: center;
+  align-self: center;
+  border: none;
+  border-bottom: 1px solid rgb(226, 226, 226);
+  transition: all 0.2s ease;
+  outline: none;
+  color: gray;
+}
+
+.auth-wrapper-select select:valid {
+  color: black;
+  border-bottom: 1px solid black;
+  transition: all 0.2s ease;
+}
+
+.auth-input {
+  width: 100%;
+  height: 100%;
+  color: black;
+  border: none;
+  outline: none;
+}
+
+.auth-input::placeholder {
+  transition: all 0.2s ease;
+}
+
+.auth-input:focus::placeholder {
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+textarea {
+  resize: none;
+}
+
+.auth-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-bottom: 1px solid rgb(226, 226, 226);
+}
+
+.auth-label::after {
+  position: absolute;
+  content: '';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: 1px solid black;
+  
+  transform: translateX(-100%);
+  transition: all 0.2s ease;
+}
+
+.auth-input:focus + .auth-label::after,
+.auth-input:valid + .auth-label::after {
+  transform: translateX(0%);
+  transition: all 0.2s ease;
+}
+
+#auth-check-btn {
+  margin-top: 5%;
+  height: 30px;
+  border-radius: 2px;
+  pointer-events: cursor;
+  background-color: white;
+  border: 1px solid black;
+  transition: all 0.2s ease;
+}
+
+#auth-check-btn:hover {
+  background-color: rgb(226, 226, 226);
+  transition: all 0.2s ease;
 }

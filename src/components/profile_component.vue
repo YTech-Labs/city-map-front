@@ -1,84 +1,56 @@
 <template>
   <div id="wrapper">
-    <h1>Profile</h1>
-    <div class="social-auth">
-      <a :href="getGoogleUrl(from)" class="google-auth">
-        <img :src="GoogleLogo" alt="Google Logo" />
-        <span>Google</span>
-      </a>
-    </div>
+      <h1>Profile</h1>
+      <a id="edit-link" href="/reset-password"><p id="edit-icon">✏️</p></a>
+      <a id="sign-out-link" href="javascript:void(0)"><p id="sing-out-icon">🚪</p></a>
   </div>
 </template>
 
-<script setup>
+<script>
 
-import GoogleLogo from '/assets/search.png';
-import { getGoogleUrl } from '../utils/getGoogleUrl';
+import router from '../router/main';
+  export default {
+      name: "Home",
+      data() {
+      },
+      mounted() {
+        $('#sign-out-link').click(() => {
+          var cookies = document.cookie.split(";");
 
-const from = '/';
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+          }
 
-for (let x = 0; x < document.querySelector('.active.exact-active').attributes.length; x++) {
-  if (document.querySelector('.active.exact-active').attributes[x].name == 'modelvalue') {
-    document.querySelector('#page-title').innerHTML = '';
-    document.querySelector('#page-title').append(document.querySelector('.active.exact-active').attributes[x].nodeValue);
-  }
+          window.location.href = "/";
+        })
+      },
 }
-
 </script>
 
 <style scoped>
-  a {
-    text-decoration: none;
-    color: inherit;
+  #wrapper {
+      display: inline-flex;
   }
 
-  html {
-    font-size: 62.5%;
+  #edit-link, 
+  #sing-out-link {
+      margin-left: 1%;
+      margin-top: 0.2%;
+      text-decoration: none;
   }
 
-  body {
-    font-family: Roboto, sans-serif;
-    color: #222;
-    font-size: 1.6rem;
+  #edit-icon,
+  #sing-out-icon {
+      font-size: 25px;
+      transition: all 0.2s linear;
   }
 
-  .container {
-    background-color: #2363eb;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .social-auth {
-    max-width: 27rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .google-auth {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 0.6rem 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .google-auth img {
-    height: 4rem;
-    margin-right: 1rem;
-  }
-  .google-auth span {
-    font-size: 1.8rem;
-  }
-
-  .google-auth:hover {
-    box-shadow: 0 1px 13px 0 rgb(0 0 0 / 15%);
+  #edit-icon:hover,
+  #sing-out-icon:hover {
+      transform: translateY(-15%);
+      transition: all 0.2s linear;
   }
 </style>
