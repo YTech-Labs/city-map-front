@@ -11,6 +11,7 @@
         name: "Map",
         
         mounted() {
+
             // Initializing map
             const map = L.map('map', {
                 drawControl: false,
@@ -288,7 +289,6 @@
                                 data.properties['area'].length != 0 && 
                                 data.properties['description'] != null &&
                                 data.properties['description'].length != 0) {
-                                    console.log(polygon);
                                     updateBuilding(data, id);
                                     layer.closePopup();
                             } else {
@@ -348,10 +348,6 @@
                                         <td>${data.location}</td>
                                     </tr>
                                     <tr>
-                                        <td>Изображения</td>
-                                        <td><a href="${data.link}">Link</td>
-                                    </tr>
-                                    <tr>
                                         <td>Описание</td>
                                         <td>${data.description}</td>
                                     </tr>
@@ -360,8 +356,8 @@
                                         <td>${new Date(marker.createdAt).toLocaleDateString('ru-EN', options)}</td>
                                     </tr>
                                     <tr>
-                                        <td>Актуальность</td>
-                                        <td>${data.relevance}</td>
+                                        <td>Ссылка</td>
+                                        <td><a class="marker-link" href="https://ylabs.uz/marker/${marker.id}">Скопировать</td>
                                     </tr>
                                 </table>
                             </div>
@@ -477,6 +473,13 @@
                     }).bindPopup(function (layer) {
                         return popupContent = loadPopupPolygon('marker', 'generated', layer);
                     }).addTo(map);
+
+                    for (let x in Layer._layers) {
+                        if (Layer._layers[x].feature.id === window.location.pathname.split('/marker/')[1]) {
+                            Layer._layers[x].openPopup();
+                            map.fitBounds([[Layer._layers[x].getLatLng().lat, Layer._layers[x].getLatLng().lng]]);
+                        }
+                    }
                 })
                 .catch(function (error) {
                     // handle error
@@ -561,7 +564,6 @@
 
             // Map event for creating layers
             map.on("draw:created", (e) => {
-                console.log(e);
                 if (e.layerType === 'marker') {
                     layer = e.layer;
                     drawnItems.addLayer(layer);

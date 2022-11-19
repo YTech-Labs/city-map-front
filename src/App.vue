@@ -53,6 +53,7 @@
       };
     },
     mounted() {
+
       const app = (() => {
         let body;
         let menu;

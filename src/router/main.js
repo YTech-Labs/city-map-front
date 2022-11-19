@@ -12,8 +12,9 @@ const routes = [
         component: MapComponent,
     },
     {
-        path: '/map',
-        redirect: '/',
+        path: '/marker/:params',
+        name: 'Marker',
+        component: MapComponent,
     },
     {
         path: '/sign-in',
