@@ -341,7 +341,7 @@
                             <div id="popup-content">`
 
                         popupContent += `
-                                <img style="width: 100px;" id="${marker.id}" src="${data.link}">
+                                <a href="${data.link}"><img style="width: 100%;" id="${marker.id}" src="${data.link}"></a>
                                 <table id="generated-table">
                                     <tr>
                                         <td>Локация</td>

@@ -16,6 +16,10 @@
         </div>
     </div>
 
+    <div class="company-logo">
+      <img :src="companyLogo.icon" alt="">
+    </div>
+
     <div class="site-content">
       <router-view></router-view>
     </div>
@@ -43,49 +47,46 @@
             link: 'profile',
           },
         ],
-        pageTitle: 'Map'
+        companyLogo: {
+          icon: "./assets/YTTT.png",
+        }
       };
     },
     mounted() {
-      if (document.cookie.split('=')[0] != 'approved') {
-          this.$router.push("/sign-in");
-          $('.menu-icon').css('display', 'none');
-      } else {
-        const app = (() => {
-          let body;
-          let menu;
-          let menuItems;
-          
-          const init = () => {
-            body = document.querySelector('body');
-            menu = document.querySelector('.menu-icon');
-            menuItems = document.querySelectorAll('.nav__list-item');
-
-            applyListeners();
-          }
-          
-          const applyListeners = () => {
-            menu.addEventListener('click', () => toggleClass(body, 'nav-active'));
-          }
-          
-          const toggleClass = (element, stringClass) => {
-            if(element.classList.contains(stringClass))
-              element.classList.remove(stringClass);
-            else 
-              element.classList.add(stringClass);
-          }
-          
-          init();
-
-        })();
+      const app = (() => {
+        let body;
+        let menu;
+        let menuItems;
         
-        const menuItems = document.querySelectorAll('.nav__list-item');
+        const init = () => {
+          body = document.querySelector('body');
+          menu = document.querySelector('.menu-icon');
+          menuItems = document.querySelectorAll('.nav__list-item');
 
-        for (let x = 0; x < menuItems.length; x++) {
-          menuItems[x].addEventListener('click', () => {
-            document.querySelector('.menu-icon').click();
-          });
+          applyListeners();
         }
+        
+        const applyListeners = () => {
+          menu.addEventListener('click', () => toggleClass(body, 'nav-active'));
+        }
+        
+        const toggleClass = (element, stringClass) => {
+          if(element.classList.contains(stringClass))
+            element.classList.remove(stringClass);
+          else 
+            element.classList.add(stringClass);
+        }
+        
+        init();
+
+      })();
+      
+      const menuItems = document.querySelectorAll('.nav__list-item');
+
+      for (let x = 0; x < menuItems.length; x++) {
+        menuItems[x].addEventListener('click', () => {
+          document.querySelector('.menu-icon').click();
+        });
       }
     }
   }
@@ -102,6 +103,22 @@
     left: 50px;
     bottom: 30px;
     cursor: pointer;
+  }
+
+  .company-logo {
+    position: fixed;
+    height: 40px;
+    width: 40px;
+    z-index: 999999;
+    right: 50px;
+    bottom: 30px;
+    cursor: pointer;
+  }
+
+  .company-logo img {
+    height: 100%;
+    width: 100%;
+    z-index: inherit;
   }
 
   .menu-icon__line {

@@ -1,8 +1,9 @@
 <template>
   <div id="wrapper">
       <h1>Profile</h1>
-      <a id="edit-link" href="/reset-password"><p id="edit-icon">✏️</p></a>
-      <a id="sign-out-link" href="javascript:void(0)"><p id="sing-out-icon">🚪</p></a>
+      <div class="account-buttons">
+
+      </div>
   </div>
 </template>
 
@@ -14,6 +15,16 @@ import router from '../router/main';
       data() {
       },
       mounted() {
+        if (document.cookie.split("=")) {
+          $('.account-buttons').append(`
+            <a id="edit-link" href="/reset-password"><p id="edit-icon">Изменить пароль</p></a>
+            <a id="sign-out-link" href="javascript:void(0)"><p id="sing-out-icon">Выйти из аккаунта</p></a>
+          `)
+        } else {
+          $('.account-buttons').append(`
+            <a id="sign-in-link" href="/sign-in"><p id="sign-in-icon">Войти в аккаунт</p></a>
+          `)
+        }
         $('#sign-out-link').click(() => {
           var cookies = document.cookie.split(";");
 
@@ -32,25 +43,29 @@ import router from '../router/main';
 
 <style scoped>
   #wrapper {
-      display: inline-flex;
+    display: grid;
+  }
+
+  .account-buttons {
+    margin-top: 1%;
   }
 
   #edit-link, 
   #sing-out-link {
-      margin-left: 1%;
-      margin-top: 0.2%;
-      text-decoration: none;
+    margin-left: 1%;
+    margin-top: 0.2%;
+    text-decoration: none;
   }
 
   #edit-icon,
   #sing-out-icon {
-      font-size: 25px;
-      transition: all 0.2s linear;
+    font-size: 25px;
+    transition: all 0.2s linear;
   }
 
   #edit-icon:hover,
   #sing-out-icon:hover {
-      transform: translateY(-15%);
-      transition: all 0.2s linear;
+    transform: translateY(-15%);
+    transition: all 0.2s linear;
   }
 </style>
