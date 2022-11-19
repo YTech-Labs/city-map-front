@@ -333,9 +333,26 @@
                         })
 
                     } else if ('generated') {
+                        let marker = layer.feature;
                         data = layer.feature.properties;
-                        return popupContent = `
-                            <div id="popup-content">
+                        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+                        // var customImageurl = data.link;
+                        // var defaultImageurl = "";
+                        // function loadGraphics(){
+                        //     //v-- will work given your example conditions
+                        //     document.getElementById(`${marker.id}`).src = customImageurl;
+                        // }
+                        // window.onload = function(){
+                        //     loadGraphics();
+                        // };
+
+                        popupContent = `
+                            <div id="popup-content">`
+
+                        popupContent += `
+                                <img style="width: 100px;" id="${marker.id}" src="#">
+                                <img style="width: 100px;" id="${marker.id}-1" src="${data.link}">
                                 <table id="generated-table">
                                     <tr>
                                         <td>Локация</td>
@@ -351,7 +368,7 @@
                                     </tr>
                                     <tr>
                                         <td>Время появления</td>
-                                        <td>${data.start_time}</td>
+                                        <td>${new Date(marker.createdAt).toLocaleDateString('ru-EN', options)}</td>
                                     </tr>
                                     <tr>
                                         <td>Актуальность</td>
@@ -360,6 +377,15 @@
                                 </table>
                             </div>
                         `;
+
+                        // let image = $(`img[data-id="${marker.id}"]`);
+                        // let downloadingImage = new Image();
+                        // downloadingImage.onload = function(){
+                        //     image.src = this.src;   
+                        // };
+                        // downloadingImage.src = data.link;
+
+                        return popupContent;
                     }
                 }
             }
@@ -462,6 +488,7 @@
                             "geometry": layer.geometry
                         }
                         state.id = layer._id;
+                        state.createdAt = allLayers[i].createdAt;
                         states.features.push(state);
                     }
                     Layer = L.geoJSON(states, {
@@ -469,6 +496,15 @@
                     }).bindPopup(function (layer) {
                         return popupContent = loadPopupPolygon('marker', 'generated', layer);
                     }).addTo(map);
+                    console.log(Layer);
+                    for (let x in Layer._layers) {
+                        var _img = document.getElementById(`${Layer._layers[x].feature.id}`);
+                        var newImg = new Image;
+                        newImg.onload = function() {
+                            _img.src = this.src;
+                        }
+                        newImg.src = `${Layer._layers[x].feature.properties.link}`;
+                    }
                 })
                 .catch(function (error) {
                     // handle error
