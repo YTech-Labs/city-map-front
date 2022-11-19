@@ -1,4 +1,4 @@
 Релиз:
 https://ylabs.uz
-Login:test_user
+Login: test_user
 Password: password123
