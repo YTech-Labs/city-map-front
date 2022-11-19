@@ -357,7 +357,7 @@
                                     </tr>
                                     <tr>
                                         <td>Ссылка</td>
-                                        <td><a class="marker-link" href="https://ylabs.uz/marker/${marker.id}">Скопировать</td>
+                                        <td><a class="marker-link" href="/marker/${marker.id}">Скопировать</td>
                                     </tr>
                                 </table>
                             </div>
