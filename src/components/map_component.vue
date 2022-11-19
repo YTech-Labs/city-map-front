@@ -337,22 +337,11 @@
                         data = layer.feature.properties;
                         const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
-                        // var customImageurl = data.link;
-                        // var defaultImageurl = "";
-                        // function loadGraphics(){
-                        //     //v-- will work given your example conditions
-                        //     document.getElementById(`${marker.id}`).src = customImageurl;
-                        // }
-                        // window.onload = function(){
-                        //     loadGraphics();
-                        // };
-
                         popupContent = `
                             <div id="popup-content">`
 
                         popupContent += `
-                                <img style="width: 100px;" id="${marker.id}" src="#">
-                                <img style="width: 100px;" id="${marker.id}-1" src="${data.link}">
+                                <img style="width: 100px;" id="${marker.id}" src="${data.link}">
                                 <table id="generated-table">
                                     <tr>
                                         <td>Локация</td>
@@ -377,14 +366,6 @@
                                 </table>
                             </div>
                         `;
-
-                        // let image = $(`img[data-id="${marker.id}"]`);
-                        // let downloadingImage = new Image();
-                        // downloadingImage.onload = function(){
-                        //     image.src = this.src;   
-                        // };
-                        // downloadingImage.src = data.link;
-
                         return popupContent;
                     }
                 }
@@ -496,15 +477,6 @@
                     }).bindPopup(function (layer) {
                         return popupContent = loadPopupPolygon('marker', 'generated', layer);
                     }).addTo(map);
-                    console.log(Layer);
-                    for (let x in Layer._layers) {
-                        var _img = document.getElementById(`${Layer._layers[x].feature.id}`);
-                        var newImg = new Image;
-                        newImg.onload = function() {
-                            _img.src = this.src;
-                        }
-                        newImg.src = `${Layer._layers[x].feature.properties.link}`;
-                    }
                 })
                 .catch(function (error) {
                     // handle error
