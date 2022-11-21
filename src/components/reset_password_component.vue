@@ -1,6 +1,6 @@
 <template>
     <div id="wrapper">
-        <h1>Reset password</h1>
+        <h1>Изменить пароль</h1>
         <div id="auth-form">
             <div class="auth-wrapper">
                 <input class="auth-input" type="text" name="username" placeholder="Username" required>
@@ -14,7 +14,7 @@
                 <input class="auth-input" type="password" placeholder="New password" name="password" required>
                 <label class="auth-label" for="password"></label>
             </div>
-            <button id="auth-check-btn">Submit</button>
+            <button id="auth-check-btn">Отправить</button>
         </div>
     </div>
 </template>

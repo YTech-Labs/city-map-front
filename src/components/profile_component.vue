@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-      <h1>Profile</h1>
+      <h1>Профиль</h1>
       <div class="account-buttons">
 
       </div>

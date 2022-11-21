@@ -34,16 +34,16 @@
         menuItems: [
           {
             key:'map',
-            title: 'Map',
+            title: 'Карта',
             icon: './assets/map-marker.svg',
-            alt: 'Map Icon',
+            alt: 'Иконка карты',
             link: '/',
           },
           {
             key:'profile',
-            title: 'Profile',
+            title: 'Профиль',
             icon: './assets/user.svg',
-            alt: 'Profile Icon',
+            alt: 'Иконка профиля',
             link: 'profile',
           },
         ],

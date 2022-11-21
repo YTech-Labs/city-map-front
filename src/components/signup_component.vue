@@ -2,13 +2,13 @@
     <div id="wrapper">
         <div id="login-signup-links">
             <router-link class="login-signup-link" to="/sign-in">
-                <p>Sign in</p>
+                <p>Войти в аккаунт</p>
             </router-link>
             <router-link class="login-signup-link" to="/sign-up">
-                <p>Sign up</p>
+                <p>Зарегистрироваться</p>
             </router-link>
         </div>
-        <h1>Sign up</h1>
+        <h1>Регистрация</h1>
         <div id="auth-form">
             <div class="auth-wrapper">
                 <input class="auth-input" type="text" name="username" placeholder="Username" required>
@@ -18,7 +18,7 @@
                 <input class="auth-input" type="password" placeholder="Password" name="password" required>
                 <label class="auth-label" for="password"></label>
             </div>
-            <button id="auth-check-btn">Submit</button>
+            <button id="auth-check-btn">Отправить</button>
         </div>
     </div>
 </template>
