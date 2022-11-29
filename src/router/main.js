@@ -12,7 +12,7 @@ const routes = [
         component: MapComponent,
     },
     {
-        path: '/marker/:params',
+        path: '/:params',
         component: MapComponent,
     },
     {

@@ -475,7 +475,7 @@
                     }).addTo(map);
 
                     for (let x in Layer._layers) {
-                        if (Layer._layers[x].feature.id === window.location.pathname.split('/marker/')[1]) {
+                        if (Layer._layers[x].feature.id === window.location.pathname.split('/')[1]) {
                             Layer._layers[x].openPopup();
                             map.fitBounds([[Layer._layers[x].getLatLng().lat, Layer._layers[x].getLatLng().lng]]);
                         }
