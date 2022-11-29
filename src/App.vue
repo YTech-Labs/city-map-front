@@ -95,7 +95,6 @@
 </script>
 
 <style scoped>
-
   .menu-icon {
     position: fixed;
     height: 30px;
