@@ -200,3 +200,26 @@ textarea {
   background-color: rgb(226, 226, 226);
   transition: all 0.2s ease;
 }
+
+.marker-link {
+  cursor: pointer;
+  width: fit-content;
+  border-bottom: thin solid transparent;
+  transition: all 0.2s ease;
+}
+
+.marker-link span {
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.marker-link:hover {
+  border-bottom: thin solid black;
+  transition: all 0.2s ease;
+}
+
+.marker-link:hover span {
+  opacity: 1;
+  transition: all 0.2s ease;
+}
