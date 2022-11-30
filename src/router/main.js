@@ -13,18 +13,22 @@ const routes = [
     },
     {
         path: '/sign-in',
+        name: 'Sing in',
         component: LoginComponent
     },
     {
         path: '/sign-up',
+        name: 'Sign up',
         component: SingUpComponent
     },
     {
         path: '/reset-password',
+        name: 'Reset Password',
         component: ResetPassComponent
     },
     {
         path: '/profile',
+        name: 'Profile',
         component: ProfileComponent
     },
     
