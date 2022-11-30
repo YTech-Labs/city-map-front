@@ -8,14 +8,14 @@
 </template>
 
 <script>
+  import router from '../router/main';
 
-import router from '../router/main';
   export default {
       name: "Home",
       data() {
       },
       mounted() {
-        if (document.cookie.split("=")) {
+        if (document.cookie.split("=")[0] && document.cookie.split("=")[1] && document.cookie.split("=")[2]) {
           $('.account-buttons').append(`
             <a id="edit-link" href="/reset-password"><p id="edit-icon">Изменить пароль</p></a>
             <a id="sign-out-link" href="javascript:void(0)"><p id="sing-out-icon">Выйти из аккаунта</p></a>
@@ -35,7 +35,10 @@ import router from '../router/main';
             document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
           }
 
-          window.location.href = "/";
+          router.push("/profile");
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         })
       },
 }

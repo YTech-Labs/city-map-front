@@ -4,8 +4,8 @@
 </template>
 
 <script>
-
     import axios from 'axios';
+    import router from '../router/main';
 
     export default {
         name: "Map",

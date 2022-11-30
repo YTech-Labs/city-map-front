@@ -21,6 +21,7 @@
 
 <script>
     import axios from "axios";
+    import router from '../router/main';
 
     export default {
         mounted() {
@@ -45,7 +46,10 @@
                         }
                     })();
                     document.cookie =`approved=${response.data['username']}=${response.data['role']}; SameSite=None; Secure; expires=Thu, 18 Dec 2023 12:00:00 UTC`;
-                    window.location.href = "/";
+                    router.push("/");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
                 })
                 .catch(function (error) {
                     // handle error
