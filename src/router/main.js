@@ -12,10 +12,6 @@ const routes = [
         component: MapComponent,
     },
     {
-        path: '/:params',
-        component: MapComponent,
-    },
-    {
         path: '/sign-in',
         component: LoginComponent
     },
